@@ -15,3 +15,7 @@ How to use:
 ```js
 app.use(/*put here your middleware handler*/);
 ```
+
+## Best libraries
+- morgan: This library is used to log information `https://www.npmjs.com/package/morgan`.
+- body-parser: Parse URL-Encoded to objects `https://www.npmjs.com/package/body-parser`.

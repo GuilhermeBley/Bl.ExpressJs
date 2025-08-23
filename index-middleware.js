@@ -9,6 +9,13 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 
 app.use(bodyParser.urlencoded({ extended: true })) // here we're using a middleware to convert form-url-encoded
 
+app.use((req, res, next) =>{ // adding our own middleware
+    if (req.url == "/login") next();
+
+    console.log(`User auth: ${req.headers.authorization}`) // logging authorization header field
+    next()
+})
+
 app.get('/', (req, res) => {
   res.sendFile(__dir + "/public/index.html")
 })
