@@ -19,3 +19,14 @@ app.use(/*put here your middleware handler*/);
 ## Best libraries
 - morgan: This library is used to log information `https://www.npmjs.com/package/morgan`.
 - body-parser: Parse URL-Encoded to objects `https://www.npmjs.com/package/body-parser`.
+
+## EJS (Embedded JavaScript)
+Interpolate JS in the middle of the HTML, being processed by the browser.
+That's how the EJS TAGS work:
+
+- `<%= variable %>` JS Output
+- `<% console.log("hello") %>` JS Execute
+- `<%- <h1>Hello</h1> %>` Render HTML
+- `<%# this is a comment %>` EJS code comment
+- `<%% %%>`Show `<%` or `%>`.
+- `<%- include("header.ejs") %>` Insert another EJS file
