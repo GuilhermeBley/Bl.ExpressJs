@@ -11,50 +11,70 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/book', (req, res) => {
-    return res.json(books)
+    try {
+        res.json(books)
+    } catch (error) {
+        res.status(500).json({ message: "Error getting data." });
+    }
 })
 
 app.get('/book/:id', (req, res) => {
-    let id = req.params.id
-    let result = books.find(p => p.id === parseInt(id))
-    return res.json(result)
+    try {
+        let id = req.params.id
+        let result = books.find(p => p.id === parseInt(id))
+        res.json(result)
+    } catch (error) {
+        res.status(500).json({ message: "Error getting data." });
+    }
 })
 
 app.post('/book', (req, res) => {
-    let currentId = lastId
-    lastId++
+    try {
+        let currentId = lastId
+        lastId++
 
-    let obj = {
-        id: currentId,
-        title: req.body.title,
-        content: req.body.content,
-        author: req.body.author,
-        date: new Date()
-    };
-    books.push(obj)
-    return res.json(obj)
+        let obj = {
+            id: currentId,
+            title: req.body.title,
+            content: req.body.content,
+            author: req.body.author,
+            date: new Date()
+        };
+        books.push(obj)
+        res.json(obj)
+    } catch (error) {
+        res.status(500).json({ message: "Error creating data." });
+    }
 })
 
 app.delete('/book/:id', (req, res) => {
-    let id = req.params.id
-    let idx = books.findIndex(p => p.id === parseInt(id))
+    try {
+        let id = req.params.id
+        let idx = books.findIndex(p => p.id === parseInt(id))
 
-    if (idx === -1) return res.status(404)
-    books.splice(idx, 1)
-    return res.json({ message: "Item sucessfully removed." })
+        if (idx === -1) return res.status(404)
+        books.splice(idx, 1)
+        res.json({ message: "Item sucessfully removed." })
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting data." });
+    }
 })
 
 app.patch('/book/:id', (req, res) => {
-    let id = req.params.id
-    let result = books.find(p => p.id === parseInt(id))
+    try {
+        let id = req.params.id
+        let result = books.find(p => p.id === parseInt(id))
 
-    if (!result) return res.status(404)
+        if (!result) return res.status(404)
 
-    result.title= req.body.title;
-    result.content= req.body.content;
-    result.author= req.body.author;
+        result.title= req.body.title;
+        result.content= req.body.content;
+        result.author= req.body.author;
 
-    return res.json(result)
+        res.json(result)
+    } catch (error) {
+        res.status(500).json({ message: "Error updating data." });
+    }
 })
 
 app.get("/", async (req, res) => {
