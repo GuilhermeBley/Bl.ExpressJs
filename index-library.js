@@ -26,9 +26,10 @@ app.post('/book', (req, res) => {
 
     let obj = {
         id: currentId,
-        name: req.body.name,
-        description: req.body.description,
-        author: req.body.author
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author,
+        date: new Date()
     };
     books.push(obj)
     return res.json(obj)
@@ -49,12 +50,22 @@ app.patch('/book/:id', (req, res) => {
 
     if (!result) return res.status(404)
 
-    result.name = req.body.name
-    result.description = req.body.description
-    result.author = req.body.author
+    result.title= req.body.title;
+    result.content= req.body.content;
+    result.author= req.body.author;
 
     return res.json(result)
 })
+
+app.get("/", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}/posts`);
+    console.log(response);
+    res.render("views/index.ejs", { posts: response.data });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching posts" });
+  }
+});
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}.`)
