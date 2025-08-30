@@ -11,6 +11,14 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+const pool = pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+})
+
+pool.on('connect', () => {
+  console.log('Connected to PostgreSQL database');
+});
+
 let items = [
   { id: 1, title: "Buy milk" },
   { id: 2, title: "Finish homework" },
