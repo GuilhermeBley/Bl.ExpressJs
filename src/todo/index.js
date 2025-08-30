@@ -33,7 +33,9 @@ app.get("/", (req, res) => {
 
 app.post("/add", (req, res) => {
   const item = req.body.newItem;
-  items.push({ title: item });
+  
+  await 
+
   res.redirect("/");
 });
 
