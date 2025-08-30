@@ -43,6 +43,23 @@ class TodoModel {
     );
     return result.rows[0];
   }
+
+  static async tryCreateTable(){
+    try{
+      await db.query(
+        `
+        CREATE TABLE IF NOT EXISTS Todo (
+        Id BIGSERIAL PRIMARY KEY,
+        Title TEXT NOT NULL,
+        FinishedAt DATE NULL,
+        CreatedAt DATE NOT NULL DEFAULT CURRENT_DATE);
+        `
+      )
+    }
+    catch(e){
+      console.error('failed to create table.', e)
+    }
+  }
 }
 
 export default TodoModel;
