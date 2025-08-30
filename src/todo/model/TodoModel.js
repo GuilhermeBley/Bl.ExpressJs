@@ -11,19 +11,19 @@ class TodoModel {
     return result.rows[0];
   }
 
-  static async create(name) {
+  static async create(title) {
     const result = await db.query(
-      'INSERT INTO Todo (Name) VALUES ($1) RETURNING *',
-      [name]
+      'INSERT INTO Todo (Title) VALUES ($1) RETURNING *',
+      [title]
     );
     return result.rows[0];
   }
 
   static async update(id, updates) {
-    const { name, finishedAt } = updates;
+    const { title, finishedAt } = updates;
     const result = await db.query(
-      'UPDATE Todo SET Name = $1, FinishedAt = $2 WHERE Id = $3 RETURNING *',
-      [name, finishedAt, id]
+      'UPDATE Todo SET Title = $1, FinishedAt = $2 WHERE Id = $3 RETURNING *',
+      [title, finishedAt, id]
     );
     return result.rows[0];
   }

@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  const item = req.body.name;
+  const item = req.body.title;
   
   await TodoModel.create(item)
 
@@ -35,7 +35,7 @@ app.post("/edit", async (req, res) => {
   
   const item = req.body;
   
-  await TodoModel.update(item.id, ({ name: item.name, finishedAt: item.finishedAt }))
+  await TodoModel.update(item.id, ({ title: item.title, finishedAt: item.finishedAt }))
 
   res.redirect("/");
 });
