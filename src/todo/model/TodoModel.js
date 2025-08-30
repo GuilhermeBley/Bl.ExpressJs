@@ -1,4 +1,4 @@
-import db from '../config/database'
+import { db } from "../config/database.js";
 
 class TodoModel {
   static async getAll() {
@@ -45,4 +45,4 @@ class TodoModel {
   }
 }
 
-module.exports = TodoModel;
+export default TodoModel;

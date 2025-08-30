@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from 'dotenv';
-import TodoModel from './model/TodoModel'
+import TodoModel from "./model/TodoModel.js";
 
 dotenv.config();
 

@@ -14,7 +14,7 @@ pool.on('error', (err) => {
   console.error('Database error:', err);
 });
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-  pool
-};
+const query = (text, params) => pool.query(text, params);
+const db = pool;
+
+export { query, db };
