@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import pg from "pg";
 import dotenv from 'dotenv';
+import TodoModel from './model/TodoModel'
 
 dotenv.config();
 
@@ -10,14 +10,6 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
-const pool = pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-})
-
-pool.on('connect', () => {
-  console.log('Connected to PostgreSQL database');
-});
 
 let items = [
   { id: 1, title: "Buy milk" },
@@ -31,17 +23,32 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/add", (req, res) => {
-  const item = req.body.newItem;
+app.post("/add", async (req, res) => {
+  const item = req.body.name;
   
-  await 
+  await TodoModel.create(item)
 
   res.redirect("/");
 });
 
-app.post("/edit", (req, res) => {});
+app.post("/edit", async (req, res) => {
+  
+  const item = req.body;
+  
+  await TodoModel.update(item.id, ({ name: item.name, finishedAt: item.finishedAt }))
 
-app.post("/delete", (req, res) => {});
+  res.redirect("/");
+});
+
+app.post("/delete", async (req, res) => {
+  
+  const item = req.body;
+  
+  await TodoModel.delete(item.id)
+
+  res.redirect("/");
+
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
