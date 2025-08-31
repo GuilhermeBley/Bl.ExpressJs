@@ -11,8 +11,15 @@ app.use(express.static("public"));
 
 TodoModel.tryCreateTable();
 
-app.get("/", (req, res) => {
-  const items = []
+app.get("/", async (req, res) => {
+  let items = []
+
+  try
+  {
+    items = await TodoModel.getAll();
+  }catch(e){
+    console.log('Failed to get all items.', e)
+  }
 
   res.render("index.ejs", {
     listTitle: "Today",
@@ -21,9 +28,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  const item = req.body.title;
+  const item = req.body.newItem;
   
-  await TodoModel.create(item)
+  try {
+    console.log(`Trying to proccess body: ${JSON.stringify(req.body)}`)
+    await TodoModel.create(item)
+  }
+  catch(e) {
+    console.log('Failed to add item.', e)
+  }
 
   res.redirect("/");
 });
@@ -31,17 +44,31 @@ app.post("/add", async (req, res) => {
 app.post("/edit", async (req, res) => {
   
   const item = req.body;
-  
-  await TodoModel.update(item.id, ({ title: item.title, finishedAt: item.finishedAt }))
+
+  try {
+    console.log(`Trying to proccess body: ${JSON.stringify(req.body)}`)
+    await TodoModel.update(item.updatedItemId, ({ title: item.updatedItemTitle, finishedAt: item.finishedAt }))
+  }
+  catch(e) {
+    console.log('Failed to update item.', e)
+  }
 
   res.redirect("/");
+
 });
 
 app.post("/delete", async (req, res) => {
   
   const item = req.body;
   
-  await TodoModel.delete(item.id)
+  try {
+    console.log(`Trying to proccess body: ${JSON.stringify(req.body)}`)
+    await TodoModel.delete(item.deleteItemId)
+  }
+  catch(e) {
+    console.log('Failed to delete item.', e)
+  }
+
 
   res.redirect("/");
 
