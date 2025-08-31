@@ -12,6 +12,8 @@ app.use(express.static("public"));
 TodoModel.tryCreateTable();
 
 app.get("/", (req, res) => {
+  const items = []
+
   res.render("index.ejs", {
     listTitle: "Today",
     listItems: items,
