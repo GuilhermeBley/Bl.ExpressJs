@@ -1,6 +1,11 @@
 # Bl.Express
 Project created for studies purposes
 
+## Todo project
+This is an example node project.
+Go to `Bl.ExpressJs\src\todo` direactory and run the `docker-compose.yml` file to execute this app in your machine and go navigate to `http://localhost:3010/`.
+![react-proj](https://github.com/user-attachments/assets/ac221b60-c7d8-45a2-a7e5-42e22c859e5f)
+
 ## Debug facilities
 To help to debug the project, we can install `npm install -g nodemon`.
 And then, to execute the project you can type `nodemon index.js`.
