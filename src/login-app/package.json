@@ -1,0 +1,16 @@
+{
+  "name": "login-app",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Login project to show how to authenticate with passport",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bl",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "passport": "^0.7.0"
+  }
+}
