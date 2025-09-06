@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.2.0",
-    "passport": "^0.7.0"
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
+    "pg": "^8.16.3"
   }
 }
