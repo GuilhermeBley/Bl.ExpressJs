@@ -8,15 +8,23 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express({ 
+  secret: process.env.SESSION_SECRET || 'your-secret-key', 
+  resave: false, 
+  saveUninitialized: false 
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(new FacebookStrategy({
     clientID: process.env['FACEBOOK_APP_ID'],
     clientSecret: process.env['FACEBOOK_APP_SECRET'],
     callbackURL: 'http://localhost:3000/oauth2/redirect/facebook',
-    state: true}), 
+    state: true}, 
     function verify(accessToken, refreshToken, profile, cb) {
       console.log(`Access token: ${accessToken}; refreshToken: ${refreshToken}; profile: ${profile}`)
       return cb(profile, false);
-    })
+    }))
 
 
 app.get("/", (req, res) => {
