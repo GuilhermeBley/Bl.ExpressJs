@@ -2,13 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import FacebookStrategy from "passport-facebook"
 import passport from "passport";
+import session from "express-session";
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express({ 
+app.use(session({ 
   secret: process.env.SESSION_SECRET || 'your-secret-key', 
   resave: false, 
   saveUninitialized: false 
@@ -17,8 +18,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new FacebookStrategy({
-    clientID: process.env['FACEBOOK_APP_ID'],
-    clientSecret: process.env['FACEBOOK_APP_SECRET'],
+    clientID: process.env['FACEBOOK_APP_ID'] || 'clientID',
+    clientSecret: process.env['FACEBOOK_APP_SECRET'] || 'clientSecret',
     callbackURL: 'http://localhost:3000/oauth2/redirect/facebook',
     state: true}, 
     function verify(accessToken, refreshToken, profile, cb) {
