@@ -45,6 +45,7 @@ app.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
+    req.session.destroy();
     res.redirect("/");
   });
 });
@@ -52,7 +53,9 @@ app.get("/logout", (req, res) => {
 app.get("/secrets", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("secrets.ejs");
+    console.log('Authenticated successfully.')
   } else {
+    console.log('secrets redirecting to "/login"...')
     res.redirect("/login");
   }
 });
@@ -62,6 +65,7 @@ app.get('/login/facebook', passport.authenticate('facebook'));
 app.get('/oauth2/redirect/facebook',
   passport.authenticate('facebook', { failureRedirect: '/login', failureMessage: true }),
   function(req, res) {
+    console.log('oauth redirecting to "/"...')
     res.redirect('/');
   });
 
