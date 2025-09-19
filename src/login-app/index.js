@@ -3,10 +3,13 @@ import bodyParser from "body-parser";
 import FacebookStrategy from "passport-facebook"
 import passport from "passport";
 import session from "express-session";
+import dotenv from 'dotenv';
 
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({ 
@@ -21,9 +24,11 @@ passport.use(new FacebookStrategy({
     clientID: process.env['FACEBOOK_APP_ID'] || 'clientID',
     clientSecret: process.env['FACEBOOK_APP_SECRET'] || 'clientSecret',
     callbackURL: 'http://localhost:3000/oauth2/redirect/facebook',
-    state: true}, 
+    state: true,
+    scope: ['email']
+    }, 
     function verify(accessToken, refreshToken, profile, cb) {
-      console.log(`Access token: ${accessToken}; refreshToken: ${refreshToken}; profile: ${profile}`)
+      console.log(`Access token: ${accessToken}; refreshToken: ${refreshToken}; profile: ${JSON.stringify(profile)}`)
       return cb(profile, false);
     }))
 
