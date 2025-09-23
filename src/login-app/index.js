@@ -25,7 +25,7 @@ passport.use(new FacebookStrategy({
     clientSecret: process.env['FACEBOOK_APP_SECRET'] || 'clientSecret',
     callbackURL: 'http://localhost:3000/oauth2/redirect/facebook',
     state: true,
-    scope: ['email']
+    scope: ['email', 'public_profile']
     }, 
     function verify(accessToken, refreshToken, profile, cb) {
       console.log(`Access token: ${accessToken}; refreshToken: ${refreshToken}; profile: ${JSON.stringify(profile)}`)
